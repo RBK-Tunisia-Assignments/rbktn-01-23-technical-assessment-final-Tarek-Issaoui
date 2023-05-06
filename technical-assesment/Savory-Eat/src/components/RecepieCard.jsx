@@ -1,130 +1,79 @@
-import React from "react";
+import React, { useState } from "react";
 import "../App.css";
 
-const RecepieCard = () => {
+const RecepieCard = (props) => {
+  const [show,setShow]=useState(false);
+  const [obj,setObj]=useState(props.recipe)
+  const handlChange=(e)=>{
+    setObj(prev=>{
+      return {
+        ...prev,
+        [e.target.name]:e.target.value
+      }
+    })
+  }
   return (
     <>
       <div className="card">
-        <button className="delete">delete</button>
-        <button className="update">update </button>
+        <button className="delete" onClick={()=>props.remove(props.recipe.recepie_Id)}>delete</button>
+        <button className="update" onClick={()=>setShow(!show)}>{show ? "Hide":"update"} </button>
 
         <>
           <div className="header">
             <img
               className="img"
-              src="https://images.unsplash.com/photo-1594007654729-407eedc4be65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGl6emF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-              alt=""
+              src={props.recipe.recepie_Image}
+              alt="food"
             />
           </div>
           <div className="text">
-            <h1 className="food">Pizza</h1>
-            <i> 25 Mins</i> <br />
-            <i>Serves: 5</i>
+            <h1 className="food">{props.recipe.name}</h1>
+            <i> {props.recipe.Prep_Time} Mins</i> <br />
+            <i>Serves: {props.recipe.Serves}</i>
           </div>
         </>
+        </div>
+      {show && <div className="add-recipe-form ">
+      <div className="form-group">
+        <label>Name:</label>
+        <input type="text" placeholder="Name" name="recepie_Name" onChange={handlChange} value={obj.recepie_Name}/>
       </div>
-      <div className="card">
-        <button className="delete">delete</button>
-        <button className="update">update </button>
+      <div className="form-group">
+        <label>Cook Time:</label>
+        <input type="number" placeholder="Cooking Time" name="Cook_Time" onChange={handlChange} value={obj.Cook_Time}/>
+      </div>
+      <div className="form-group">
+        <label>Prep Time:</label>
+        <input type="number" placeholder="Preparation Time" name="Prep_Time" onChange={handlChange} value={obj.Prep_Time}/>
+      </div>
+      <div className="form-group">
+        <label>Serves:</label>
+        <input type="number" placeholder="serves" name="Serves" onChange={handlChange} value={obj.Serves}/>
+      </div>
+      <div className="form-group">
+        <label>Category:</label>
+        <input type="text" placeholder="Category" name="categorie" onChange={handlChange} value={obj.categorie}/>
+      </div>
+      <div className="form-group">
+        <label>Description:</label>
+        <input type="text" placeholder="Description" name="recepie_Description" onChange={handlChange} value={obj.recepie_Description}/>
+      </div>
+      <div className="form-group">
+        <label>Ingredients:</label>
+        <input placeholder="Ingredients" name="recepie_Ingredients" onChange={handlChange} value={obj.recepie_Ingredients}/>
+      </div>
 
-        <>
-          <div className="header">
-            <img
-              className="img"
-              src="https://images.unsplash.com/photo-1611270629569-8b357cb88da9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8cGFzdGF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-              alt=""
-            />
-           
-          </div>
-          <div className="text">
-            <h1 className="food">Pasta</h1>
-            <i> 30 Mins</i> <br />
-            <i>4 Serves </i>
-          </div>
-        </>
+      <div className="form-group">
+        <label>Image:</label>
+        <input type="text" placeholder="Image URL" name="recepie_Image" onChange={handlChange} value={obj.recepie_Image}/>
       </div>
-      <div className="card">
-        <button className="delete">delete</button>
-        <button className="update">update </button>
+      <button className="create-recipe-btn" onClick={()=>{
+        setShow(!show)
+        props.update(obj.recepie_Id,obj)}}>Edit Recipe</button>
+    </div>}
+        </>
 
-        <>
-          <div className="header">
-            <img
-              className="img"
-              src="https://images.unsplash.com/photo-1618449840665-9ed506d73a34?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Y3VycnklMjBjaGlja2VufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-              alter=""
-            />
-          </div>
-          <div className="text">
-            <h1 className="food">Curry chicken</h1>
-            <i> 45 Mins</i> <br />
-            <i>4 Serves </i>
-          </div>
-        </>
-      </div>
-      <div className="card">
-        <button className="delete">delete</button>
-        <button className="update">update </button>
-
-        <>
-          <div className="header">
-            <img
-              className="img"
-              src="https://images.unsplash.com/photo-1512058556646-c4da40fba323?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8c3RpciUyMGZyeXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-              alt=""
-            />
-          </div>
-          <div className="text">
-            <h1 className="food">Stir-Fry</h1>
-            <i> 40 Mins</i> <br />
-            <i>3 Serves </i>
-          </div>
-        </>
-      </div>
-      <div className="card">
-        <button className="delete">delete</button>
-        <button className="update">update </button>
-
-        <>
-          <div className="header">
-            <img
-              className="img"
-              src="https://images.unsplash.com/photo-1598103442097-8b74394b95c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9hc3RlZCUyMGNoaWNrZW58ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-              alt=""
-            />
-            <div className="icon">
-              <a href="/">
-                <i />
-              </a>
-            </div>
-          </div>
-          <div className="text">
-            <h1 className="food">Roasted Chicken</h1>
-            <i> 425 Mins</i> <br />
-            <i>6 Serves </i>
-          </div>
-        </>
-      </div>
-      <div className="card">
-        <button className="delete">delete</button>
-        <button className="update">update </button>
-
-        <>
-          <div className="header">
-            <img
-              className="img"
-              src="https://images.unsplash.com/photo-1548869206-93b036288d7e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YmVlZiUyMHN0aXIlMjBmcnl8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-              alt=""
-            />
-          </div>
-          <div className="text">
-            <h1 className="food">Beef Stir Fry</h1>
-            <i> 40 Mins</i> <br />
-            <i>2 Serves </i>
-          </div>
-        </>
-      </div>
-    </>
+    
   );
 };
 
